@@ -1,7 +1,6 @@
 import { Tag } from '@/components/common'
 import { colors, typography } from '@/styles/emotion'
-import cutString from '@/utils/cutString'
-import dateFormat from '@/utils/dateFormat'
+import { cutString } from '@/utils'
 import styled from '@emotion/styled'
 import Image from 'next/image'
 
@@ -12,7 +11,14 @@ const Critic = ({
   title,
   description,
   createAt,
-}: Critic) => {
+}: {
+  image: string
+  author: string
+  tag: string
+  title: string
+  description: string
+  createAt: number
+}) => {
   return (
     <CriticBox>
       <ContentImage>
@@ -34,7 +40,9 @@ const Critic = ({
         </ContentBodyHeader>
         <Title>{cutString(title, 28)}</Title>
         <Description>{cutString(description, 70)}</Description>
-        <Time>{dateFormat(createAt)}</Time>
+        <Time>
+          {new Intl.DateTimeFormat('ko').format(createAt).slice(0, -1)}
+        </Time>
       </ContentBody>
     </CriticBox>
   )

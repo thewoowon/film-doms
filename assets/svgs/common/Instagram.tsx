@@ -21,7 +21,7 @@ const Instagram = ({ width = '32', height = '32', fill = 'black' }: Props) => {
         width={width}
         height={height}
       >
-        <path d="M0 0H32V32H0V0Z" fill="#D9D9D9" />
+        <path d="M0 0H32V32H0V0Z" fill={fill} />
       </mask>
       <g mask="url(#mask0_594_2227)">
         <path

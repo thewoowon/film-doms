@@ -1,4 +1,4 @@
-import { useFetchCommentsByArticle } from '@/services/comment'
+import { useFetchArticleCommentListByCategoryById } from '@/services/article'
 import { colors, flexGap, typography } from '@/styles/emotion'
 import styled from '@emotion/styled'
 import { ArticleDetailProps } from '../ArticleDetail'
@@ -6,15 +6,19 @@ import CommentForm from './CommentForm'
 import CommentItem from './CommentItem'
 
 const CommentContainer = ({ articleId, category }: ArticleDetailProps) => {
-  const { data: comments } = useFetchCommentsByArticle(articleId, category)
+  const { data: commentList } = useFetchArticleCommentListByCategoryById(
+    category,
+    articleId
+  )
+
   return (
     <Container>
-      <CommentCount>{`댓글 ${comments.length}개`}</CommentCount>
-      {comments.map((comment, index) => {
+      <CommentCount>{`댓글 ${commentList.commentCount}개`}</CommentCount>
+      {commentList.comments.map((comment, index) => {
         return (
           <CommentItem
             key={index}
-            borderBottom={comments.length - 1 !== index}
+            borderBottom={commentList.commentCount - 1 !== index}
             comment={comment}
           />
         )

@@ -2,13 +2,13 @@ import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import { ArrowRight } from '@svgs/common'
 import { flexGap } from '@/styles/emotion'
-import { useFetchRecents } from '@/services/recent'
+import { useFetchRecentList } from '@/services/main'
 import { Button, Section } from '@/components/common'
 import Recent from './Recent'
 
 const RecentContainer = () => {
   const { push } = useRouter()
-  const { data: recents } = useFetchRecents()
+  const { data: recentList } = useFetchRecentList()
 
   return (
     <Container>
@@ -24,7 +24,7 @@ const RecentContainer = () => {
         }
       />
       <Box>
-        {recents.slice(0, 5).map(recent => {
+        {recentList.map(recent => {
           return <Recent key={`recent-${recent.id}`} {...recent} />
         })}
       </Box>

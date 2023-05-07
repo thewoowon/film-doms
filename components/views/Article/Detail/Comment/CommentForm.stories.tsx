@@ -1,6 +1,6 @@
 import { flexGap } from '@/styles/emotion'
 import styled from '@emotion/styled'
-import { ComponentMeta } from '@storybook/react'
+import { type ComponentMeta } from '@storybook/react'
 import CommentForm from './CommentForm'
 
 export default {

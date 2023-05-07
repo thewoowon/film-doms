@@ -1,13 +1,12 @@
 /**
  *
- * @param {string} createdAt
+ * @param {number} createdAt
  * @returns {string} 지난 시간
  */
 
-export const dateDiff = (createdAt: string) => {
+export const dateDiff = (createdAt: number) => {
   const now = new Date()
-  const created = new Date(createdAt)
-  const diff = now.getTime() - created.getTime()
+  const diff = now.getTime() - createdAt
 
   if (diff < 0) {
     return '몇 초 전'

@@ -1,6 +1,7 @@
 import { defaultProfile } from '@/assets/images/common'
 import { Button } from '@/components/common'
 import { colors, flexGap, typography } from '@/styles/emotion'
+import { getImageSrcByUuid } from '@/utils'
 import { dateDiff } from '@/utils/dateDiff'
 import styled from '@emotion/styled'
 import Image from 'next/image'
@@ -9,14 +10,17 @@ const ChildCommentItem = ({
   comment,
   borderBottom,
 }: {
-  comment: Comment.Child
+  comment: Article.ChildComment
   borderBottom: boolean
 }) => {
   return (
     <CommentItemContainer borderBottom={borderBottom}>
       <CommentProfileBox>
         <Image
-          src={comment.author.profile ?? defaultProfile}
+          src={
+            getImageSrcByUuid(comment.author.profileImage.uuidFileName) ??
+            defaultProfile
+          }
           alt="user-profile"
           width={40}
           height={40}

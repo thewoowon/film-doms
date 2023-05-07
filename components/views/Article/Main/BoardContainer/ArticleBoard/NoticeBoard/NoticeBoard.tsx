@@ -5,7 +5,7 @@ import { defaultProfile } from '@images/common'
 import { ImageIcon } from '@svgs/common'
 import { colors, flex, flexCenter, font } from '@/styles/emotion'
 import { RenderIf } from '@/components/common'
-import cutString from '@/utils'
+import { cutString } from '@/utils'
 import { convertCommentCount, convertKilo } from '../utils'
 import { Date, Likes, Tag, Title, Views, Writer } from '../styles'
 

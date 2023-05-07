@@ -7,17 +7,18 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { ArticleDetail } from './ArticleDetail'
 import { CommentContainerView } from './Comment'
+import { camelToSnake } from '@/utils'
 
 export type ArticleDetailContainerProps = {
-  articleId: Article.Item['id']
-  category: Article.Category
+  articleId: number
+  category: string
 }
 
 const ArticleDetailContainer = ({
   articleId,
   category,
 }: ArticleDetailContainerProps) => {
-  // TODO: ArticleDetail
+  const snakeCategory = camelToSnake(category)
 
   return (
     <Container>
@@ -31,12 +32,15 @@ const ArticleDetailContainer = ({
       </Title>
       <ArticleSection>
         <Suspense fallback={<Loading />}>
-          <ArticleDetail articleId={articleId} category={category} />
+          <ArticleDetail articleId={articleId} category={snakeCategory} />
         </Suspense>
       </ArticleSection>
       <CommentSection>
         <Suspense fallback={<Loading />}>
-          <CommentContainerView articleId={articleId} category={category} />
+          <CommentContainerView
+            articleId={articleId}
+            category={snakeCategory}
+          />
         </Suspense>
       </CommentSection>
     </Container>

@@ -6,24 +6,19 @@ import Footer from '../Footer'
 import { useRouter } from 'next/router'
 
 const AppLayout = ({ children }: PropsWithChildren) => {
-  const router  = useRouter()
+  const router = useRouter()
   return (
     <>
       <Header />
-      <Main backgroundColor={router.pathname == '/about' ? '#111111' :'white'}>
-        <Container>{children}</Container>
+      <Main backgroundColor={router.pathname == '/about' ? '#111111' : 'white'}>
+        {children}
       </Main>
       <Footer />
     </>
   )
 }
 
-const Container = styled.div`
-  width: 100%;
-  max-width: 1280px;
-`
-
-const Main = styled.main<{backgroundColor:string}>`
+const Main = styled.main<{ backgroundColor: string }>`
   width: 100%;
   ${flex({ direction: 'column', align: 'center' })}
   background-color: ${({ backgroundColor }) => backgroundColor};

@@ -3,20 +3,19 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { colors, flex, flexGap, typography } from '@/styles/emotion'
 import { CATEGORIES } from '@/constants/article'
-import { Tab } from '@/components/common'
+import { RenderIf, Tab } from '@/components/common'
 import SearchForm from './SearchForm'
 import TagList from './TagList'
 import BoardContainer from './BoardContainer'
+import { useRouter } from 'next/router'
 
-interface Props {
-  category: Article.Category
-}
-
-const ArticleContainer = ({ category }: Props) => {
+const ArticleContainer = () => {
+  const router = useRouter()
+  const category = String(router.query.category)
   const [currentPage, setCurrentPage] = useState(1)
 
   return (
-    <Container>
+    <Container category={category}>
       <Title>{CATEGORIES[category].title}</Title>
       <Tab.Group
         css={TabGroup}
@@ -43,7 +42,7 @@ const ArticleContainer = ({ category }: Props) => {
                 category={category}
                 params={{
                   page: currentPage,
-                  limit: 22,
+                  size: 22,
                   ...(selected !== '전체' && { tag: selected }),
                 }}
                 onChangePage={page => setCurrentPage(page)}
@@ -91,7 +90,7 @@ const Title = styled.h1`
   color: ${colors.primary.black};
 `
 
-const Container = styled.div`
+const Container = styled.div<{ category: string }>`
   ${flexGap('40px')}
   width: 954px;
 `

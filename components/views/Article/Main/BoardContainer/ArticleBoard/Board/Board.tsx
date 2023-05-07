@@ -5,12 +5,12 @@ import { defaultProfile } from '@images/common'
 import { ImageIcon } from '@svgs/common'
 import { colors, flex, flexCenter, font } from '@/styles/emotion'
 import { RenderIf } from '@/components/common'
-import cutString from '@/utils'
+import { cutString, getImageSrcByUuid, snakeToCamel } from '@/utils'
 import { Date, Likes, Tag, Title, Views, Writer } from '../styles'
 import { convertKilo, convertCommentCount } from '../utils'
 
 interface Props {
-  items: Article.Item[]
+  items: Article.MainContent[]
 }
 
 const Board = ({ items }: Props) => {
@@ -22,23 +22,25 @@ const Board = ({ items }: Props) => {
         {items.map(item => {
           return (
             <Tr key={item.id}>
-              <TdTag css={Tag}>{item.tag}</TdTag>
+              <TdTag css={Tag}>{cutString(item.tag, 8)}</TdTag>
               <TdTitle css={Title}>
                 <TitleBox
-                  onClick={() => push(`/article/${item.category}/${item.id}`)}
+                  onClick={() =>
+                    push(`/article/${snakeToCamel(item.category)}/${item.id}`)
+                  }
                 >
                   <RenderIf
-                    condition={item.isContainImage}
+                    condition={item.containImage}
                     render={<ImageIcon />}
                   />
-                  {item.isContainImage
+                  {item.containImage
                     ? cutString(item.title, 22)
                     : cutString(item.title, 24)}
                   <RenderIf
-                    condition={item.comments.length > 0}
+                    condition={item.commentCount > 0}
                     render={
                       <CommentCount>
-                        {convertCommentCount(item.comments.length)}
+                        {convertCommentCount(item.commentCount)}
                       </CommentCount>
                     }
                   />
@@ -46,19 +48,27 @@ const Board = ({ items }: Props) => {
               </TdTitle>
               <TdWriter css={Writer}>
                 <WriterBox
-                  onClick={() => push(`/user/profile/${item.writer.id}`)}
+                  onClick={() => push(`/user/profile/${item.author.id}`)}
                 >
                   <Image
-                    src={item.writer.profile ?? defaultProfile}
+                    src={
+                      getImageSrcByUuid(
+                        item.author.profileImage.uuidFileName
+                      ) ?? defaultProfile
+                    }
                     alt="user-profile"
                     width={22}
                     height={22}
                     style={{ borderRadius: '50%' }}
                   />
-                  {cutString(item.writer.nickname, 6)}
+                  {cutString(item.author.nickname, 6)}
                 </WriterBox>
               </TdWriter>
-              <TdDate css={Date}>{item.createAt}</TdDate>
+              <TdDate css={Date}>
+                {new Intl.DateTimeFormat('ko')
+                  .format(item.createdAt)
+                  .slice(0, -1)}
+              </TdDate>
               <TdViews css={Views}>{convertKilo(item.views, 1)}</TdViews>
               <TdLikes css={Likes}>{convertKilo(item.likes, 1)}</TdLikes>
             </Tr>

@@ -1,14 +1,17 @@
 import styled from '@emotion/styled'
 import { flexGap } from '@/styles/emotion'
 import { Tab, Tag } from '@/components/common'
-import { useFetchTags } from '@/services/tag'
+import { useFetchArticleTagListByCategory } from '@/services/article'
+import { camelToSnake } from '@/utils'
 
 interface Props {
-  category: Article.Category
+  category: string
 }
 
 const TagList = ({ category }: Props) => {
-  const { data: tags } = useFetchTags(category)
+  const { data: tagList } = useFetchArticleTagListByCategory(
+    camelToSnake(category)
+  )
 
   return (
     <Box>
@@ -26,7 +29,7 @@ const TagList = ({ category }: Props) => {
           )
         }}
       </Tab>
-      {tags.map(tag => {
+      {tagList.map(({ tag }) => {
         return (
           <Tab key={`tag-${tag}`} value={tag}>
             {({ isActive }) => {

@@ -8,7 +8,7 @@ import {
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { Suspense } from 'react'
-import Critics from './Critics'
+import CriticList from './CriticList'
 
 const CriticContainer = () => {
   const { push } = useRouter()
@@ -29,7 +29,7 @@ const CriticContainer = () => {
       <SectionBody>
         <ResetErrorBoundary fallback={<div>에러...</div>}>
           <Suspense fallback={<Loading width="100%" height="960px" />}>
-            <Critics />
+            <CriticList />
           </Suspense>
         </ResetErrorBoundary>
       </SectionBody>

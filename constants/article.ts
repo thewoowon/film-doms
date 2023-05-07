@@ -1,7 +1,4 @@
-export const CATEGORIES: Record<
-  Article.Category,
-  { title: string; value: string }
-> = {
+export const CATEGORIES: Record<string, { title: string; value: string }> = {
   movie: {
     title: 'Movie',
     value: 'movie',
@@ -9,5 +6,9 @@ export const CATEGORIES: Record<
   filmUniverse: {
     title: 'Film Universe',
     value: 'filmUniverse',
+  },
+  critic: {
+    title: 'Critic',
+    value: 'critic',
   },
 }

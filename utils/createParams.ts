@@ -3,11 +3,10 @@ type Params = {
 }
 
 const createParams = (params: Params) => {
-  const _params = Object.entries(params)
-    .filter((param): param is [string, string] => param[1] !== null)
-    .reduce((acc, [key, value]) => `${acc}&${key}=${value}`, '')
+  const stringifyParams = JSON.parse(JSON.stringify(params))
+  const _params = new URLSearchParams(stringifyParams)
 
-  return _params
+  return _params.toString()
 }
 
 export default createParams

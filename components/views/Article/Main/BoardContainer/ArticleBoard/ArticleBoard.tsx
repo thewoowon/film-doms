@@ -4,7 +4,7 @@ import NoticeBoard from './NoticeBoard'
 
 interface Props {
   noticeItems: Article.Notice[]
-  articleItems: Article.Item[]
+  articleItems: Article.MainContent[]
 }
 
 const ArticleBoard = ({ noticeItems, articleItems }: Props) => {

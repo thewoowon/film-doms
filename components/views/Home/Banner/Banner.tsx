@@ -1,8 +1,8 @@
-import { useFetchBanners } from '@/services/banner'
+import { useFetchBannerList } from '@/services/main'
 import Slider from './Slider'
 
 const Banner = () => {
-  const { data: banners } = useFetchBanners()
+  const { data: banners } = useFetchBannerList()
   return <Slider banners={banners} />
 }
 

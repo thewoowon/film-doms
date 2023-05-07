@@ -2,7 +2,7 @@ export const navItems = [
   { text: 'About', link: '/about' },
   { text: 'Movie', link: '/article/movie' },
   { text: 'Film Universe', link: '/article/filmUniverse' },
-  { text: 'Critic', link: '/critic' },
+  { text: 'Critic', link: '/article/critic' },
 ]
 
 export const sideNavList = [

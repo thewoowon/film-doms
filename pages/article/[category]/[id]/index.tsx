@@ -21,10 +21,10 @@ const ArticleDetailPage = () => {
 
   return (
     <OpenGraph title={'Article'} path={`/article/${category}/${id}`}>
-      <ArticleLayout right={<ArticlePopularContainer />}>
+      <ArticleLayout right={<ArticlePopularContainer />} width={'1280px'}>
         <ColumnGrid>
           <ArticleDetailViews articleId={id} category={category} />
-          <ArticleMainViews category={category} />
+          <ArticleMainViews />
         </ColumnGrid>
       </ArticleLayout>
     </OpenGraph>

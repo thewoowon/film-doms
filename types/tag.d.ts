@@ -1,1 +1,0 @@
-type Tag = string

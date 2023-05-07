@@ -1,6 +1,6 @@
 import CommunityContainer from './Community'
 import BannerContainer from './Banner'
-import NoticeContainer from './Notice'
+import FilmUniverseContainer from './FilmUniverse'
 import CriticContainer from './Critic'
 
 const HomeContainer = () => {
@@ -8,7 +8,7 @@ const HomeContainer = () => {
     <>
       <BannerContainer />
       <CommunityContainer />
-      <NoticeContainer />
+      <FilmUniverseContainer />
       <CriticContainer />
     </>
   )

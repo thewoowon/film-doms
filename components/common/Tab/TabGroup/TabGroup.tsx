@@ -1,4 +1,10 @@
-import { type ComponentProps, useCallback, useEffect, useState } from 'react'
+import {
+  type ComponentProps,
+  useCallback,
+  useEffect,
+  useState,
+  useRef,
+} from 'react'
 import { TabContext, type TabContextType } from '../context'
 
 interface Props
@@ -16,6 +22,7 @@ const TabGroup = ({
   clearDependency,
   ...rest
 }: Props) => {
+  const dependency = useRef(clearDependency)
   const [selected, setSelectedTab] = useState(_selected)
 
   const onChangeSelected = useCallback((value: TabContextType['selected']) => {
@@ -25,13 +32,16 @@ const TabGroup = ({
   }, [])
 
   useEffect(() => {
-    onChangeSelected(_selected)
+    if (dependency.current !== clearDependency) {
+      dependency.current = clearDependency
+      onChangeSelected(_selected)
+    }
   }, [clearDependency, _selected, onChangeSelected])
 
   return (
     <TabContext.Provider
       value={{
-        selected,
+        selected: dependency.current === clearDependency ? selected : _selected,
         onChange: onChangeSelected,
       }}
     >

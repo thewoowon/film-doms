@@ -1,6 +1,6 @@
-import { defaultProfile } from '@/assets/images/common'
-import { ChevronFillDown, ChevronFillUp } from '@/assets/svgs/common'
-import MiniThumb from '@/assets/svgs/common/MiniThumb'
+import { defaultProfile } from '@images/common'
+import { ChevronFillDown, ChevronFillUp } from '@svgs/common'
+import MiniThumb from '@svgs/common/MiniThumb'
 import { Button } from '@/components/common'
 import { colors, flexGap, typography } from '@/styles/emotion'
 import { dateDiff } from '@/utils/dateDiff'
@@ -8,12 +8,13 @@ import styled from '@emotion/styled'
 import Image from 'next/image'
 import { useState } from 'react'
 import ChildCommentItem from './ChildCommentItem'
+import { getImageSrcByUuid } from '@/utils'
 
 const CommentItem = ({
   comment,
   borderBottom,
 }: {
-  comment: Comment.Parent
+  comment: Article.Comment
   borderBottom: boolean
 }) => {
   const [leaveReply, setLeaveReply] = useState<boolean>(false)
@@ -23,7 +24,10 @@ const CommentItem = ({
     <CommentItemContainer borderBottom={borderBottom}>
       <CommentProfileBox>
         <Image
-          src={comment.author.profile ?? defaultProfile}
+          src={
+            getImageSrcByUuid(comment.author.profileImage.uuidFileName) ??
+            defaultProfile
+          }
           alt="user-profile"
           width={40}
           height={40}

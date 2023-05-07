@@ -1,0 +1,42 @@
+
+  
+  @keyframes open {
+    0% {
+      opacity: 0%;
+      transform: translate(0, -100%);
+    }
+  
+    100% {
+      opacity: 100%;
+      transform: translate(0, 0);
+    }
+  }
+  
+  @keyframes close {
+    0% {
+      opacity: 100%;
+      transform: translate(0, 0);
+    }
+  
+    50% {
+      opacity: 0%;
+    }
+  
+    100% {
+      opacity: 0%;
+      transform: translate(0, 100%);
+    }
+  }
+  
+  .open-modal {
+    animation-name: open;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+  }
+  
+  .close-modal {
+    animation-name: close;
+    animation-duration: 0.3s;
+    animation-timing-function: ease-out;
+  }
+  

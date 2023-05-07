@@ -13,21 +13,19 @@ const TITLE = [
   '안녕하세요'.repeat(10),
 ]
 
-export const FILM_UNIVERSE_DATA: Article.Item[] = Array.from(
+export const FILM_UNIVERSE_DATA: Article.MainContent[] = Array.from(
   { length: 200 },
   (_, i) => ({
     id: i + 1,
+    category: 'FILM_UNIVERSE',
     tag: TAG[getRandomNum(0, TAG.length - 1)],
-    isContainImage: getRandomNum(0, 1) === 1,
     title: TITLE[getRandomNum(0, TITLE.length - 1)],
-    comments: Array.from({ length: getRandomNum(0, 150) }, (_, i) => i + 1),
-    writer: USER_DATA[getRandomNum(0, USER_DATA.length - 1)],
-    createAt: '2023.01.01',
-    updateAt: '2023.01.01',
+    author: USER_DATA[getRandomNum(0, USER_DATA.length - 1)],
+    createdAt: 1682065256993,
+    updatedAt: 1682065256993,
     views: getRandomNum(0, 10000),
     likes: getRandomNum(0, 1500),
-    category: 'filmUniverse',
-    content:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitae nis',
+    commentCount: getRandomNum(0, 150),
+    containImage: getRandomNum(0, 1) === 1,
   })
 )

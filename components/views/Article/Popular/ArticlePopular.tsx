@@ -1,37 +1,37 @@
-import { ImageIcon } from '@/assets/svgs/common'
-import { RenderIf } from '@/components/common'
-import { useFetchArticlePopular } from '@/services/popular'
-import { colors, typography } from '@/styles/emotion'
-import styled from '@emotion/styled'
 import Link from 'next/link'
+import styled from '@emotion/styled'
+import { ImageIcon } from '@svgs/common'
+import { useFetchPopularArticleList } from '@/services/article'
+import { colors, typography } from '@/styles/emotion'
+import { snakeToCamel } from '@/utils'
+import { RenderIf } from '@/components/common'
 
 const ArticlePopular = () => {
-  const { data: articles } = useFetchArticlePopular()
+  const { data: articleList } = useFetchPopularArticleList()
+
   return (
     <div>
-      {articles.map((article, idx) => (
+      {articleList.map((article, idx) => (
         <Link
-          href={`/article/${article.category}/${article.id}`}
+          href={`/article/${snakeToCamel(article.category)}/${article.id}`}
           key={article.id}
         >
           <Article>
             <ArticleNum>{idx + 1}.</ArticleNum>
             <ArticleTitle>
               <RenderIf
-                condition={article.isContainImage}
+                condition={article.containImage}
                 render={<ImageIcon />}
               />
               <h3>{article.title}</h3>
             </ArticleTitle>
-            <ArticleAuthor>{article.writer.nickname}</ArticleAuthor>
+            <ArticleAuthor>{article.author.nickname}</ArticleAuthor>
           </Article>
         </Link>
       ))}
     </div>
   )
 }
-
-export default ArticlePopular
 
 const Article = styled.div`
   height: 60px;
@@ -53,6 +53,7 @@ const ArticleAuthor = styled.div`
   font-weight: 500;
   width: 37px;
 `
+
 const ArticleTitle = styled(ArticleAuthor)`
   display: flex;
   column-gap: 6.5px;
@@ -65,3 +66,5 @@ const ArticleTitle = styled(ArticleAuthor)`
     white-space: nowrap;
   }
 `
+
+export default ArticlePopular

@@ -1,4 +1,4 @@
-import { getMockImage, getRandomNum } from '@/utils'
+import { getRandomNum } from '@/utils'
 
 const NICKNAME = [
   '작성자',
@@ -11,9 +11,14 @@ const NICKNAME = [
   '한글english혼합hello',
 ]
 
-export const USER_DATA: User[] = Array.from({ length: 100 }, (_, i) => ({
-  id: i + 1,
-  nickname: `${i}${NICKNAME[getRandomNum(0, NICKNAME.length - 1)]}`,
-  profile:
-    i < 50 ? getMockImage(`user${i}`, { width: 200, height: 200 }) : null,
-}))
+export const USER_DATA: Article.Author[] = Array.from(
+  { length: 100 },
+  (_, i) => ({
+    id: i + 1,
+    nickname: `${i}${NICKNAME[getRandomNum(0, NICKNAME.length - 1)]}`,
+    profileImage: {
+      id: i + 1,
+      uuidFileName: '7f5fb6d2-40fa-4e3d-81e6-a013af6f4f23.png',
+    },
+  })
+)

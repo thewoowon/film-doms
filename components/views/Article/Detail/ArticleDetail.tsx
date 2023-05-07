@@ -1,24 +1,31 @@
 import { Thumb } from '@/assets/svgs/common'
 import { Button, Divider } from '@/components/common'
-import { useFetchArticleById } from '@/services/article'
-import { useFetchCommentsByArticle } from '@/services/comment'
+import { useFetchArticleDetailContentByCategoryById } from '@/services/article'
+import { useFetchArticleCommentListByCategoryById } from '@/services/article'
 import { colors, flexGap, typography } from '@/styles/emotion'
 import styled from '@emotion/styled'
 import { ProfileBar } from './ProfileBar'
 
 export type ArticleDetailProps = {
-  articleId: Article.Item['id']
-  category: Article.Category
+  articleId: number
+  category: string
 }
 
 export const ArticleDetail = ({ articleId, category }: ArticleDetailProps) => {
-  const { data: article } = useFetchArticleById(articleId, category)
-  const { data: comments } = useFetchCommentsByArticle(articleId, category)
+  const { data: article } = useFetchArticleDetailContentByCategoryById(
+    category,
+    articleId
+  )
+  const { data: comments } = useFetchArticleCommentListByCategoryById(
+    category,
+    articleId
+  )
+
   return (
     <Container>
-      <Category>{article && article.tag}</Category>
-      <Title>{article && article.title}</Title>
-      <ProfileBar article={article} count={comments.length} />
+      <Category>{article.tag}</Category>
+      <Title>{article.title}</Title>
+      <ProfileBar article={article} count={comments.commentCount} />
       <Divider color={colors.grey[100]} size={1} />
       <Content>
         <TopContentGrid>

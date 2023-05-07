@@ -1,4 +1,3 @@
-import { SwitchCase } from '@/components/common'
 import { useScrollFadeIn } from '@/hooks'
 import styled from '@emotion/styled'
 import { ReactNode } from 'react'
@@ -74,15 +73,17 @@ const CommonTitle = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 40px;
+  font-size: 72px;
+  line-height: 80px;
 `
 
 const CommonSubtitle = styled.div`
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
-  font-size: 40px;
-  margin-bottom: 80px;
+  font-size: 28px;
+  line-height: 40px;
+  margin-bottom: 40px;
   margin-top: 20px;
 `
 const CommonDescription = styled.div`
@@ -91,5 +92,5 @@ const CommonDescription = styled.div`
   font-weight: 400;
   font-size: 22px;
   text-align: left;
-  line-height: 52px;
+  line-height: 45px;
 `

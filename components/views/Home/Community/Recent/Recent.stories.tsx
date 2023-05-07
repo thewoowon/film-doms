@@ -26,5 +26,5 @@ Default.args = {
   id: 1,
   title: '이것은 Recent Title 입니다',
   category: '영화',
-  comment: [1, 2, 3, 4, 5],
+  commentCount: 5,
 }

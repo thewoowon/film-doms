@@ -1,38 +1,73 @@
 import { useRouter } from 'next/router'
 import styled from '@emotion/styled'
 import {
-  useFetchArticleByCategory,
-  useFetchArticleNotice,
+  useFetchArticleNoticeList,
+  useFetchArticleMainContentByCategory,
 } from '@/services/article'
 import { flex, flexCenter, flexGap, font } from '@/styles/emotion'
-import ArticleBoard from './ArticleBoard'
-import Pagination from './Pagination'
+import { ArticleBoard, CriticBoard } from './ArticleBoard'
+import { camelToSnake } from '@/utils'
+import { Pagination, SwitchCase } from '@/components/common'
 
 interface Props {
-  category: Article.Category
-  params: Article.Params
+  category: string
+  params: Required<Omit<Article.MainContentParams, 'tag'>> &
+    Pick<Article.MainContentParams, 'tag'>
   onChangePage: (page: number) => void
 }
 
-const BoardContainer = ({ category, params, onChangePage }: Props) => {
+const BoardContainer = ({
+  category,
+  params: { page, tag, size },
+  onChangePage,
+}: Props) => {
   const { push } = useRouter()
 
-  const { data: notices } = useFetchArticleNotice()
-  const { data: articles } = useFetchArticleByCategory(category, params)
+  const { data: noticeList } = useFetchArticleNoticeList()
+  const { data: articleList } = useFetchArticleMainContentByCategory(
+    camelToSnake(category),
+    {
+      page: Math.max(page - 1, 0),
+      tag,
+      size,
+    }
+  )
 
   return (
     <Container>
-      <ArticleBoard noticeItems={notices} articleItems={articles.items} />
-      <ButtonBox>
-        <Button onClick={() => push(`/write/article/${category}`)}>
-          게시글 작성하기
-        </Button>
-      </ButtonBox>
+      <SwitchCase
+        value={category}
+        caseBy={{
+          critic: (
+            <>
+              <CriticBoard criticItems={articleList.content} />
+              <ButtonBox>
+                <Button onClick={() => push(`/write/article/${category}`)}>
+                  게시글 작성하기
+                </Button>
+              </ButtonBox>
+            </>
+          ),
+        }}
+        defaultRender={
+          <>
+            <ArticleBoard
+              noticeItems={noticeList}
+              articleItems={articleList.content}
+            />
+            <ButtonBox>
+              <Button onClick={() => push(`/write/article/${category}`)}>
+                게시글 작성하기
+              </Button>
+            </ButtonBox>
+          </>
+        }
+      />
       <Box>
         <Pagination
           count={5}
-          currentPage={params.page}
-          totalPage={articles.totalPage}
+          currentPage={page}
+          totalPage={articleList.totalPages}
           onChange={onChangePage}
         />
       </Box>

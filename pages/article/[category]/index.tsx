@@ -1,15 +1,25 @@
-import { useRouter } from 'next/router'
-import styled from '@emotion/styled'
 import { ArticleLayout } from '@views/Layout'
-import { ArticleMainViews } from '@views/Article'
 import { hasOwnProperty } from '@/utils'
 import { OpenGraph } from '@/components/common'
 import { CATEGORIES } from '@/constants/article'
 import ArticlePopularContainer from '@/components/views/Article/Popular/ArticlePopularContainer'
+import dynamic from 'next/dynamic'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
-const ArticlePage = () => {
-  const { query } = useRouter()
-  const category = query.category as string
+type CategoryProps = {
+  category: string
+}
+
+const ArticlePage = ({ category }: CategoryProps) => {
+  const components: {
+    [key: string]: any
+  } = {
+    movie: dynamic(() => import('@views/Article/Main/ArticleContainer')),
+    filmUniverse: dynamic(() => import('@views/Article/Main/ArticleContainer')),
+    critic: dynamic(() => import('@views/Article/Main/CriticContainer')),
+  }
+  const Component = components[category]
+
   const isValidCategory = hasOwnProperty(CATEGORIES, category)
 
   if (!isValidCategory) {
@@ -19,22 +29,33 @@ const ArticlePage = () => {
 
   return (
     <OpenGraph title={CATEGORIES[category].title} path={`/article/${category}`}>
-      <ArticleLayout right={<ArticlePopularContainer />}>
-        <ArticleMainViews category={category} />
+      <ArticleLayout
+        width={category !== 'critic' ? '1280px' : '100%'}
+        right={category !== 'critic' ? <ArticlePopularContainer /> : null}
+      >
+        <Component />
       </ArticleLayout>
     </OpenGraph>
   )
 }
 
-// ! 임시로 만든 인기게시글 컴포넌트입니다.
-// ! right 자리에 만든 인기게시글 컴포넌트와 sticky 등을 포함한 wrapper box를 합성하여 넣으면 됩니다.
-const Box = styled.div`
-  width: 302px;
-  height: 400px;
-  border: 1px solid #000;
-  position: sticky;
-  top: 30%;
-  right: 0;
-`
-
 export default ArticlePage
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return {
+    paths: [
+      { params: { category: 'movie' } },
+      { params: { category: 'filmUniverse' } },
+      { params: { category: 'critic' } },
+    ],
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  return {
+    props: {
+      category: params && params.category,
+    },
+  }
+}

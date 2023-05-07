@@ -4,45 +4,47 @@ import Image from 'next/image'
 import { defaultProfile } from '@/assets/images/common'
 import { dateDiff } from '@/utils/dateDiff'
 import { getRoundString } from '@/utils/getRoundString'
+import { getImageSrcByUuid } from '@/utils'
 
 interface ProfileBarProps {
-  article: Article.Item
+  article: Article.BaseDetailContent
   count: number
 }
 
 const ProfileBar = ({ article, count }: ProfileBarProps) => {
   return (
-    article && (
-      <Bar>
-        <Ul>
-          <Li>
-            <Image
-              src={article.writer.profile ?? defaultProfile}
-              alt="user-profile"
-              width={40}
-              height={40}
-              style={{
-                borderRadius: '50%',
-                marginRight: '12px',
-                marginLeft: '8px',
-              }}
-              priority
-            />
-            {article.writer.nickname}
-          </Li>
-          <Li>{dateDiff(article.createAt)}</Li>
-          <Li>
-            조회수<Span>{getRoundString(article.views)}</Span>
-          </Li>
-          <Li>
-            추천수<Span>{getRoundString(article.likes)}</Span>
-          </Li>
-          <Li>
-            댓글<Span>{getRoundString(count)}</Span>
-          </Li>
-        </Ul>
-      </Bar>
-    )
+    <Bar>
+      <Ul>
+        <Li>
+          <Image
+            src={
+              getImageSrcByUuid(article.author.profileImage.uuidFileName) ??
+              defaultProfile
+            }
+            alt="user-profile"
+            width={40}
+            height={40}
+            style={{
+              borderRadius: '50%',
+              marginRight: '12px',
+              marginLeft: '8px',
+            }}
+            priority
+          />
+          {article.author.nickname}
+        </Li>
+        <Li>{dateDiff(article.createdAt)}</Li>
+        <Li>
+          조회수<Span>{getRoundString(article.views)}</Span>
+        </Li>
+        <Li>
+          추천수<Span>{getRoundString(article.likes)}</Span>
+        </Li>
+        <Li>
+          댓글<Span>{getRoundString(count)}</Span>
+        </Li>
+      </Ul>
+    </Bar>
   )
 }
 
