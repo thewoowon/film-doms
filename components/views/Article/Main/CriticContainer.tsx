@@ -2,7 +2,6 @@ import { Suspense, useState } from 'react'
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { colors, flex, flexGap } from '@/styles/emotion'
-import { CATEGORIES } from '@/constants/article'
 import { Tab } from '@/components/common'
 import TagList from './TagList'
 import BoardContainer from './BoardContainer'
@@ -15,18 +14,26 @@ const CriticContainer = () => {
 
   return (
     <Container>
-      <Image
-        alt={'critic_banner'}
-        width={1280}
-        height={321}
-        src={
-          'https://imagedelivery.net/6qzLODAqs2g1LZbVYqtuQw/3ef941d6-6a60-4459-a9c2-b36602a40f00/public'
-        }
-        priority
-      />
+      <BannerContainer>
+        <Image
+          alt={'critic_banner'}
+          width={1280}
+          height={321}
+          src={
+            'https://imagedelivery.net/6qzLODAqs2g1LZbVYqtuQw/40d9a0e9-4983-47a7-35e8-ee9476c31d00/public'
+          }
+          priority
+        />
+        <TextArea>
+          <BannerTitle>{'C R I T I C'}</BannerTitle>
+          <BannerSubTitle>
+            {'필름덤즈에서는 누구나 비평가가 될 수 있습니다.'}
+          </BannerSubTitle>
+        </TextArea>
+      </BannerContainer>
       <ThisWeekText>THIS WEEK&#39;S CRITIC</ThisWeekText>
       <SlideContainer />
-      <Title>{CATEGORIES[category].title}</Title>
+      <Title>{'CRITIC'}</Title>
       <SubTitle>{'필름덤즈의 최신 비평들을 확인해 보세요!'}</SubTitle>
       <Tab.Group
         css={TabGroup}
@@ -48,7 +55,7 @@ const CriticContainer = () => {
                 category={category}
                 params={{
                   page: currentPage,
-                  size: 6,
+                  size: 9,
                   ...(selected !== '전체' && { tag: selected }),
                 }}
                 onChangePage={page => setCurrentPage(page)}
@@ -92,6 +99,51 @@ const TopBox = styled.div`
 
 const TabGroup = css`
   ${flexGap('40px')}
+`
+
+const BannerContainer = styled.div`
+  position: relative;
+  background-color: #000000;
+`
+
+const TextArea = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  text-align: center;
+  top: 0;
+`
+
+const BannerTitle = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 60px;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 2px;
+
+  color: #ffffff;
+`
+
+const BannerSubTitle = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 36px;
+
+  display: flex;
+  align-items: center;
+
+  color: #ffffff;
+  padding-bottom: 45px;
 `
 
 const Title = styled.div`
@@ -141,11 +193,11 @@ const ThisWeekText = styled.div`
   font-weight: 700;
   font-size: 32px;
   line-height: 60px;
-  with: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-
+  padding: 16px 0;
   color: #ff5414;
 `
 

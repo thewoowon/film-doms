@@ -13,6 +13,8 @@ const TagList = ({ category }: Props) => {
     camelToSnake(category)
   )
 
+  const tagColor = category === 'critic' ? 'default' : 'black'
+
   return (
     <Box>
       <Tab value="전체">
@@ -21,7 +23,7 @@ const TagList = ({ category }: Props) => {
             <Tag
               as="button"
               shape="round"
-              color={isActive ? 'orange' : 'black'}
+              color={isActive ? 'orange' : tagColor}
               {...(isActive && { fill: 'true' })}
             >
               전체
@@ -37,7 +39,7 @@ const TagList = ({ category }: Props) => {
                 <Tag
                   as="button"
                   shape="round"
-                  color={isActive ? 'orange' : 'black'}
+                  color={isActive ? 'orange' : tagColor}
                   {...(isActive && { fill: 'true' })}
                 >
                   {tag}

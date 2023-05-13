@@ -1,6 +1,8 @@
+import { XIcon } from '@/assets/svgs/common'
 import { useModal } from '@/hooks/useModal'
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
+import Alphabets from './deco'
 
 const Modal = () => {
   const { animation, modalDataState, closeModal } = useModal()
@@ -26,11 +28,11 @@ const Modal = () => {
         <ModalDimmer>
           <ModalBody className={animation}>
             <ModalHeader>
-              <ModalTitle>{modalDataState.title}</ModalTitle>
               <ModalCloseButton onClick={() => closeModal()}>
-                X
+                <XIcon />
               </ModalCloseButton>
             </ModalHeader>
+            <Alphabets />
             <ModalContents>{modalDataState.content}</ModalContents>
           </ModalBody>
         </ModalDimmer>
@@ -47,7 +49,12 @@ const ModalDimmer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(
+    180deg,
+    rgba(17, 17, 17, 0) 0%,
+    rgba(17, 17, 17, 0.7) 18.15%,
+    #111111 29.71%
+  );
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,36 +64,25 @@ const ModalBody = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 400px;
-  height: 600px;
-  background-color: #ffffff;
-  border: 1px solid #cbcbcb;
-  border-radius: 10px;
-`
-const ModalTitle = styled.div`
-  padding: 1rem;
-  font-weight: bold;
-  font-size: large;
-  border-bottom: 1px solid #cbcbcb;
+  width: 560px;
+  background-color: tranparent;
 `
 const ModalContents = styled.div`
-  padding: 1rem;
   border-bottom: 1px solid #cbcbcb;
+  margin-top: 40px;
 `
 const ModalHeader = styled.div`
   position: relative;
+  height: 48px;
 `
 const ModalCloseButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-  width: 52px;
-  height: 52px;
   background: none;
   border: none;
-  font-weight: bold;
   :hover {
     opacity: 50%;
-    transition: 0.5s;
+    transition: 0.2s;
   }
 `

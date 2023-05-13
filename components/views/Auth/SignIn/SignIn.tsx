@@ -4,12 +4,15 @@ import { FormError } from '@/components/common/FormError'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/router'
 import toast from 'react-hot-toast'
+import { EMAIL_REGEX, PASSWORD_REGEX } from '@/constants/auth/regex'
+import { google } from '@/assets/images/common'
+import Image from 'next/image'
 
 export type LoginFormType = {
-  username: string
+  email: string
   password: string
 }
-function SignIn() {
+function SignIn({ closeModal }: { closeModal: () => void }) {
   const router = useRouter()
   //const queryClient = useQueryClient()
   const {
@@ -49,42 +52,49 @@ function SignIn() {
 
   const onSubmit = async () => {
     try {
-      const { username, password } = getValues()
-      signIn({ username, password })
+      const { email, password } = getValues()
+      signIn({ email, password })
     } catch (err) {}
   }
   return (
     <Container>
+      <LoginTitleContainer>
+        <LoginTitle>로그인</LoginTitle>
+        <PasswordLink
+          onClick={() => {
+            alert('비밀번호 찾기')
+          }}
+        >
+          비밀번호 찾기
+        </PasswordLink>
+      </LoginTitleContainer>
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
-        <InputLabel>이메일</InputLabel>
         <LoginInput
-          {...register('username', {
-            required: '유저명을 입력하세요',
-            pattern: /^[a-z0-9_-]{3,16}$/,
+          {...register('email', {
+            required: '이메일을 입력하세요',
+            pattern: EMAIL_REGEX,
           })}
           name="username"
           type="text"
-          placeholder="Username"
+          placeholder="이메일"
           required
           autoComplete="true"
         />
-        {(errors.username?.type === 'pattern' && (
+        {(errors.email?.type === 'pattern' && (
           <FormError errorMessage="올바른 형식을 입력해주세요" />
         )) ||
-          (errors.username?.message && (
-            <FormError errorMessage={errors.username?.message} />
+          (errors.email?.message && (
+            <FormError errorMessage={errors.email?.message} />
           ))}
-        <InputLabel>비밀번호</InputLabel>
         <LoginInput
           {...register('password', {
             required: '비밀번호를 입력해주세요',
-            pattern:
-              /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/,
+            pattern: PASSWORD_REGEX,
           })}
           name="password"
           type="password"
           required
-          placeholder="Password"
+          placeholder="비밀번호"
           autoComplete="true"
         />
         {errors.password?.type === 'pattern' && (
@@ -93,45 +103,86 @@ function SignIn() {
         {errors.password?.message && (
           <FormError errorMessage={errors.password?.message} />
         )}
-        <LoginButton color="black" onSubmit={handleSubmit(onSubmit)}>
-          이메일 로그인
-        </LoginButton>
+        <LoginButton onSubmit={handleSubmit(onSubmit)}>로그인</LoginButton>
       </LoginForm>
-      <LoginButton color="#3482F6" onClick={() => {}}>
-        Google 로그인
-      </LoginButton>
-      <UnderLinkContiner>
-        아직 회원이 아니신가요?
-        <UnderLink href="/auth/signup">회원가입하기</UnderLink>
-      </UnderLinkContiner>
+      <LineButton
+        color="#222222"
+        onClick={() => {
+          closeModal()
+          router.push('/auth/signup')
+        }}
+      >
+        회원가입
+      </LineButton>
+      <div
+        css={{
+          color: '#f7f7f5',
+        }}
+      >
+        또는
+      </div>
+      <LineButton color="#222222" onClick={() => {}}>
+        <Image src={google} width="24" height="24" alt="" />
+        구글로 로그인
+      </LineButton>
     </Container>
   )
 }
 
 export default SignIn
 
-const LoginButton = styled.button<{ color: string }>`
-  border-radius: 0.25rem;
-  padding: 0.75rem 1rem;
-  font-size: 1rem;
+const LoginButton = styled.button`
+  font-size: 20px;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  width: 380px;
-  color: ${props => props.color};
-  border: 2px solid ${props => props.color};
-  margin-top: 0.5rem;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 50px;
+  background-color: #ff5414;
+  color: #f7f7f5;
+`
+
+const LineButton = styled.button<{ color: string }>`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  width: 100%;
+  height: 50px;
+  border: 2px solid #f7f7f5;
   &:hover {
     background-color: ${props => props.color};
     color: white;
   }
+  color: #f7f7f5;
+  gap: 8px;
+`
+
+const LoginTitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+const LoginTitle = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 24px;
+  color: #f7f7f5;
+`
+
+const PasswordLink = styled.a`
+  color: #f7f7f5;
+  cursor: pointer;
 `
 
 const LoginForm = styled.form`
   display: grid;
-  gap: 0.5rem;
+  gap: 16px;
   margin-top: 1rem;
-  width: 380px;
+  width: 100%;
 `
 
 const Container = styled.div`
@@ -139,34 +190,18 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+  gap: 16px;
 `
 const LoginInput = styled.input`
   width: 100%;
-  height: 52px;
-  border-radius: 0.25rem;
-  border: 1px solid #d8d4d4;
+  height: 48px;
+  border: 2px solid #f7f7f5;
   padding: 0 1rem;
   font-size: 1rem;
   cursor: pointer;
   outline: none;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
-`
-const UnderLinkContiner = styled.div`
-  display: flex;
-  width: 380px;
-  padding: 1rem 0;
-`
-const UnderLink = styled.a`
-  color: #3482f6;
-  margin: 0 0.5rem;
-  &:hover {
-    border-bottom: 1px solid #3482f6;
-  }
-`
-
-const InputLabel = styled.div`
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.5rem 0;
+  background-color: transparent;
+  color: #f7f7f5;
 `

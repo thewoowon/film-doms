@@ -16,11 +16,11 @@ const Header = () => {
   const responseFontSize = windowWidth <= 768 ? '28px' : '32px'
   const [showSideNav, setShowSideNav] = useState(false)
 
-  const { openModal } = useModal()
+  const { openModal, closeModal } = useModal()
 
   const modalData = {
     title: '로그인',
-    content: <SignIn />,
+    content: <SignIn closeModal={closeModal} />,
     callback: () => alert('Modal Callback()'),
   }
   return (

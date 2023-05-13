@@ -1,0 +1,1 @@
+export const MAX_INTEREST_MOVIE_COUNT = 5

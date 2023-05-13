@@ -4,7 +4,7 @@ interface Props {
   fill?: string
 }
 
-const M = ({ width = '129', height = '129', fill = '#E75B4E' }: Props) => {
+const BigM = ({ width = '460', height = '460', fill = '#E75B4E' }: Props) => {
   return (
     <svg
       width={width}
@@ -14,11 +14,11 @@ const M = ({ width = '129', height = '129', fill = '#E75B4E' }: Props) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        d="M88.0357 0L65.7938 28.8164L42.9632 0H0.769531V129.318H29.4873H29.6884V86.1689L43.997 129.318H86.966L101.275 86.1689V129.318H101.282H130V0H88.0357Z"
+        d="M310.416 0L231.299 102.503L150.088 0H0V460H102.153H102.868V306.513L153.765 460H306.611L357.509 306.513V460H357.534H459.687V0H310.416Z"
         fill={fill}
       />
     </svg>
   )
 }
 
-export default M
+export default BigM

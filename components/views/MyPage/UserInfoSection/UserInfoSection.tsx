@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { colors, flex, flexGap, font } from '@/styles/emotion'
 import { Divider } from '@/components/common'
+import { MAX_INTEREST_MOVIE_COUNT } from '../constants'
 
 interface Props {
   email: string
@@ -15,6 +16,11 @@ const UserInfoSection = ({
   interestMovieList,
   createdAt,
 }: Props) => {
+  const sliceInterestMovieList = interestMovieList.slice(
+    0,
+    MAX_INTEREST_MOVIE_COUNT
+  )
+
   return (
     <Container>
       <Divider color={colors.primary.orange} size={4} limit="24px" />
@@ -30,7 +36,7 @@ const UserInfoSection = ({
             <Content>{nickname}</Content>
             <OptionBox>
               <Button as="div" role="button">
-                중복체크
+                변경
               </Button>
             </OptionBox>
           </Tr>
@@ -47,9 +53,14 @@ const UserInfoSection = ({
             <Label>관심영화</Label>
             <Content>
               <InterestMovieBox>
-                {interestMovieList.join(', ')}
+                {sliceInterestMovieList.join(', ')}
               </InterestMovieBox>
             </Content>
+            <OptionBox>
+              <Button as="div" role="button">
+                변경
+              </Button>
+            </OptionBox>
           </Tr>
           <Tr>
             <Label>가입일</Label>
