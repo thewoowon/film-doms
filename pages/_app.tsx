@@ -14,7 +14,10 @@ import { useRouterChange } from '@/hooks'
 import { RecoilRoot } from 'recoil'
 import { Error, ResetErrorBoundary } from '@/components/common'
 
-export default function App({ Component, pageProps: { pageProps } }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { ...pageProps },
+}: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
