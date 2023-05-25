@@ -68,8 +68,7 @@ const ModalBody = styled.div`
   background-color: tranparent;
 `
 const ModalContents = styled.div`
-  border-bottom: 1px solid #cbcbcb;
-  margin-top: 40px;
+  margin-top: 32px;
 `
 const ModalHeader = styled.div`
   position: relative;

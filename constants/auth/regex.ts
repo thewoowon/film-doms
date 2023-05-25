@@ -3,3 +3,5 @@ export const EMAIL_REGEX =
 
 export const PASSWORD_REGEX =
   /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,14}$/
+
+export const NICKNAME_REGEX = /^[가-힣|]{2,}$/

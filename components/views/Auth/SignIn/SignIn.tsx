@@ -58,16 +58,6 @@ function SignIn({ closeModal }: { closeModal: () => void }) {
   }
   return (
     <Container>
-      <LoginTitleContainer>
-        <LoginTitle>로그인</LoginTitle>
-        <PasswordLink
-          onClick={() => {
-            alert('비밀번호 찾기')
-          }}
-        >
-          비밀번호 찾기
-        </PasswordLink>
-      </LoginTitleContainer>
       <LoginForm onSubmit={handleSubmit(onSubmit)}>
         <LoginInput
           {...register('email', {
@@ -103,28 +93,31 @@ function SignIn({ closeModal }: { closeModal: () => void }) {
         {errors.password?.message && (
           <FormError errorMessage={errors.password?.message} />
         )}
+        <LoginOptionContainer>
+          <LoginStatusContainer>
+            <LoginStatusCheck type={'checkbox'} />
+            <LoginStatusText>로그인 상태유지</LoginStatusText>
+          </LoginStatusContainer>
+          <PasswordLink>비밀번호 찾기</PasswordLink>
+        </LoginOptionContainer>
+
         <LoginButton onSubmit={handleSubmit(onSubmit)}>로그인</LoginButton>
       </LoginForm>
-      <LineButton
-        color="#222222"
-        onClick={() => {
-          closeModal()
-          router.push('/auth/signup')
-        }}
-      >
-        회원가입
-      </LineButton>
-      <div
-        css={{
-          color: '#f7f7f5',
-        }}
-      >
-        또는
-      </div>
       <LineButton color="#222222" onClick={() => {}}>
         <Image src={google} width="24" height="24" alt="" />
         구글로 로그인
       </LineButton>
+      <SignUpText>
+        아직 필름덤즈 회원이 아니신가요?
+        <span
+          onClick={() => {
+            closeModal()
+            router.push('/auth/signup')
+          }}
+        >
+          회원가입
+        </span>
+      </SignUpText>
     </Container>
   )
 }
@@ -139,6 +132,7 @@ const LoginButton = styled.button`
   height: 50px;
   background-color: #ff5414;
   color: #f7f7f5;
+  margin-top: 32px;
 `
 
 const LineButton = styled.button<{ color: string }>`
@@ -159,18 +153,37 @@ const LineButton = styled.button<{ color: string }>`
   gap: 8px;
 `
 
-const LoginTitleContainer = styled.div`
+const LoginOptionContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `
-const LoginTitle = styled.div`
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 24px;
+
+const LoginStatusContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+`
+
+const LoginStatusText = styled.div`
   color: #f7f7f5;
+`
+
+const LoginStatusCheck = styled.input`
+  appearance: none;
+  color: #f7f7f5;
+  background: transparent;
+  border: 2px solid #f7f7f5;
+  width: 18px;
+  height: 18px;
+  &:checked {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
+    background-size: 150% 150%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+  }
 `
 
 const PasswordLink = styled.a`
@@ -204,4 +217,19 @@ const LoginInput = styled.input`
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
   background-color: transparent;
   color: #f7f7f5;
+  &::placeholder {
+    color: #f7f7f5;
+  }
+`
+
+const SignUpText = styled.p`
+  color: #f7f7f5;
+  & > span {
+    color: #ff5414;
+    margin-left: 8px;
+    cursor: pointer;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `
